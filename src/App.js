@@ -11,14 +11,14 @@ import { useState } from 'react';
 
 function App() {
   //ログインチェック
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
 
   return (
     <Router>
       <Navbar isAuth={isAuth} />
       <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/CreatePost" element={<CreatePost />} />
+          <Route path="/CreatePost" element={<CreatePost isAuth/>} />
           <Route path="/Login" element={<Login setIsAuth={setIsAuth} />} />
           <Route path="/Logout" element={<Logout setIsAuth={setIsAuth} />} />
       </Routes>

@@ -15,17 +15,19 @@ const Navbar = ({ isAuth }) => {
         <FontAwesomeIcon icon={faHouse} />
         ホーム
       </Link>
-      <Link to="/createpost">
-        <FontAwesomeIcon icon={faFilePen} />
-        記事投稿
-      </Link>
-      {/* isAuthが!でtrueの時は権限がない場合loginを表示、ある場合falseの場合はログアウト表示 */}
 
+      {/* isAuthがtrueの時はログアウトと記事投稿を表示、falseの場合はログインを表示 */}
       {isAuth ? (
-        <Link to="/logout">
-          <FontAwesomeIcon icon={faArrowRightToBracket} />
-          ログアウト
-        </Link>
+        <>
+          <Link to="/createpost">
+            <FontAwesomeIcon icon={faFilePen} />
+            記事投稿
+          </Link>
+          <Link to="/logout">
+            <FontAwesomeIcon icon={faArrowRightToBracket} />
+            ログアウト
+          </Link>
+        </>
       ) : (
         <Link to="/login">
           <FontAwesomeIcon icon={faArrowRightToBracket} />

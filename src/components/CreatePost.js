@@ -1,17 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./CreatePost.css";
-const CreatePost = () => {
+import {addDoc, collection} from "firebase/firestore"; //{}があるときは名前つきインポート
+import {db} from "../firebase";
+import { auth } from "../firebase"; // authをインポートする
+import { useNavigate } from 'react-router-dom';
+
+const CreatePost = ({ isAuth }) => {
   //タイトル記入
   const [title, setTitle] = useState();
   //投稿内容記入
   const [postText, setPostText] = useState();
+  const navigate = useNavigate();
 
-  const createPost = () => {
-    console.log(title);
-    console.log(postText);
-  }
+  const createPost = async() => {
+   await addDoc(collection(db, "posts"), {
+    title: title,
+    poststext: postText,
+    author: {
+      username: auth.currentUser.displayName, //ログインしているdisplayユーザーnameを取得している
+      id: auth.currentUser.uid
+    },
+   });
+   navigate("/");
+  };
+
+  useEffect(() => {
+    if (!isAuth) {
+      navigate("/login");
+    }
+  }, []);
   return (
-    <div class="createPostPage">
+    <div className="createPostPage">
       <div className='postContainer'>
         <h1>記事を投稿する</h1>
         <div className='inputPost'>
